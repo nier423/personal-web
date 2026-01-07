@@ -37,9 +37,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="max-w-2xl mx-auto"
         >
-          <p className="text-base xl:text-lg text-muted-foreground leading-relaxed">
-            自学AI编程3个月，坚定的实战派，在vibe coding的浪潮里把想法变成现实的一名艺术生。
-          </p>
+          <p className="text-base xl:text-lg text-muted-foreground leading-relaxed">自学AI编程3个月，坚定的实战派，在vibe coding的浪潮里把想法变成现实的一名艺术生。</p>
         </motion.div>
       </div>
     </section>

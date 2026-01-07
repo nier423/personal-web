@@ -31,20 +31,7 @@ const projects = [
     ],
     icon: 'code' as const,
   },
-  {
-    id: '03',
-    number: '03',
-    title: '沉浸式艺术展览体验',
-    role: 'Experience Designer & Developer',
-    tags: ['Three.js', 'WebGL', 'Interactive Design', 'Motion Design'],
-    description:
-      '设计并实现线上虚拟艺术展览空间，运用 3D 技术与交互设计打造沉浸式观展体验。结合环境设计理念，创造富有空间感与叙事性的数字艺术场景。',
-    metrics: [
-      { label: '访问量', value: '50K+' },
-      { label: '平均停留时长', value: '8min' },
-    ],
-    icon: 'palette' as const,
-  },
+
 ];
 
 export default function WorkSection() {
