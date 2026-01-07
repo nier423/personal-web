@@ -24,16 +24,16 @@ All colors MUST be HSL.
     --art-accent: 240 5% 96%;
     --art-accent-foreground: 240 10% 10%;
     
-    /* Code Mode - 深灰背景，代码风格 */
-    --code-background: 240 10% 8%;
-    --code-foreground: 240 5% 90%;
-    --code-card: 240 10% 12%;
-    --code-card-foreground: 240 5% 90%;
-    --code-muted: 240 10% 15%;
-    --code-muted-foreground: 240 5% 65%;
-    --code-border: 240 10% 20%;
-    --code-accent: 240 10% 15%;
-    --code-accent-foreground: 240 5% 90%;
+    /* Code Mode - 纯黑背景，代码风格 */
+    --code-background: 0 0% 0%;
+    --code-foreground: 0 0% 85%;
+    --code-card: 0 0% 8%;
+    --code-card-foreground: 0 0% 85%;
+    --code-muted: 0 0% 12%;
+    --code-muted-foreground: 0 0% 60%;
+    --code-border: 0 0% 15%;
+    --code-accent: 0 0% 12%;
+    --code-accent-foreground: 0 0% 85%;
     
     /* 默认使用 Art Mode */
     --background: var(--art-background);
@@ -120,8 +120,8 @@ All colors MUST be HSL.
     --accent-foreground: var(--code-accent-foreground);
     --border: var(--code-border);
     --input: var(--code-border);
-    --primary: 240 5% 90%;
-    --primary-foreground: 240 10% 8%;
+    --primary: 0 0% 85%;
+    --primary-foreground: 0 0% 0%;
   }
 }
 
