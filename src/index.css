@@ -1,4 +1,6 @@
 /* stylelint-disable */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,24 +12,50 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --radius: 0.5rem;
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    
+    /* Art Mode - 白色背景，优雅设计 */
+    --art-background: 0 0% 98%;
+    --art-foreground: 240 10% 10%;
+    --art-card: 0 0% 100%;
+    --art-card-foreground: 240 10% 10%;
+    --art-muted: 240 5% 96%;
+    --art-muted-foreground: 240 4% 46%;
+    --art-border: 240 6% 90%;
+    --art-accent: 240 5% 96%;
+    --art-accent-foreground: 240 10% 10%;
+    
+    /* Code Mode - 深灰背景，代码风格 */
+    --code-background: 240 10% 8%;
+    --code-foreground: 240 5% 90%;
+    --code-card: 240 10% 12%;
+    --code-card-foreground: 240 5% 90%;
+    --code-muted: 240 10% 15%;
+    --code-muted-foreground: 240 5% 65%;
+    --code-border: 240 10% 20%;
+    --code-accent: 240 10% 15%;
+    --code-accent-foreground: 240 5% 90%;
+    
+    /* 默认使用 Art Mode */
+    --background: var(--art-background);
+    --foreground: var(--art-foreground);
+    --card: var(--art-card);
+    --card-foreground: var(--art-card-foreground);
+    --popover: var(--art-card);
+    --popover-foreground: var(--art-card-foreground);
+    --primary: 240 10% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 10%;
+    --muted: var(--art-muted);
+    --muted-foreground: var(--art-muted-foreground);
+    --accent: var(--art-accent);
+    --accent-foreground: var(--art-accent-foreground);
     --destructive: 0 84.2% 60.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--art-border);
+    --input: var(--art-border);
+    --ring: 240 10% 10%;
+    
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -41,7 +69,6 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 330 0% 9%;
     --sidebar-border: 330 0% 90%;
     --sidebar-ring: 0 0% 63%;
-    --destructive-foreground: 210 40% 98%;
   }
 
   .dark {
@@ -78,6 +105,24 @@ All colors MUST be HSL.
     --sidebar-ring: 300 0% 45%;
     --destructive-foreground: 210 40% 98%;
   }
+  
+  /* Code Mode 样式类 */
+  .code-mode {
+    --background: var(--code-background);
+    --foreground: var(--code-foreground);
+    --card: var(--code-card);
+    --card-foreground: var(--code-card-foreground);
+    --popover: var(--code-card);
+    --popover-foreground: var(--code-card-foreground);
+    --muted: var(--code-muted);
+    --muted-foreground: var(--code-muted-foreground);
+    --accent: var(--code-accent);
+    --accent-foreground: var(--code-accent-foreground);
+    --border: var(--code-border);
+    --input: var(--code-border);
+    --primary: 240 5% 90%;
+    --primary-foreground: 240 10% 8%;
+  }
 }
 
 @layer base {
@@ -87,5 +132,31 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Art Mode 字体 */
+  .art-mode {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .art-mode h1,
+  .art-mode h2,
+  .art-mode h3,
+  .art-mode h4,
+  .art-mode h5,
+  .art-mode h6 {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  /* Code Mode 字体 */
+  .code-mode {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer utilities {
+  .smooth-scroll {
+    scroll-behavior: smooth;
   }
 }
