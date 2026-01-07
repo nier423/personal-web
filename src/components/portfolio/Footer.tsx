@@ -1,6 +1,7 @@
 import { useMode } from '@/contexts/ModeContext';
 import { motion } from 'framer-motion';
-import { Mail, MessageCircle, Github, X } from 'lucide-react';
+import { Mail, MessageCircle, Github } from 'lucide-react';
+import XLogo from '@/components/ui/x-logo';
 
 const socialLinks = [
   {
@@ -23,7 +24,7 @@ const socialLinks = [
   },
   {
     name: 'X',
-    icon: X,
+    icon: XLogo,
     href: 'https://x.com/nier423',
     label: 'nier423',
   },

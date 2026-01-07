@@ -133,6 +133,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #FBF7DB52;
   }
   
   /* Art Mode 字体 */
