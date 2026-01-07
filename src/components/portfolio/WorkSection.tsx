@@ -52,7 +52,7 @@ export default function WorkSection() {
               mode === 'art' ? 'font-serif' : 'font-mono'
             }`}
           >
-            Selected Works
+            AI Projects
           </h2>
 
         </motion.div>
