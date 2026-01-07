@@ -20,14 +20,14 @@ const projects = [
   {
     id: '02',
     number: '02',
-    title: '全栈智能对话系统',
-    role: 'Full-Stack AI Developer',
-    tags: ['LLM', 'Node.js', 'TypeScript', 'Vector DB', 'RAG'],
+    title: 'AI私人衣橱智能导购小程序',
+    role: 'VibeBuild Bootcamp 最佳Vibe Coding奖',
+    tags: ['多模态大模型', 'Milvus', 'RAG', '混合检索', '微信小程序'],
     description:
-      '开发企业级智能客服系统，集成大语言模型与检索增强生成技术。实现多轮对话管理、知识库检索、情感分析等功能，支持高并发场景下的稳定运行。',
+      '参加创业磨坊VibeBuild Bootcamp获得最佳Vibe coding奖。采用多模态大模型与混合检索策略，基于Milvus向量数据库构建高精度RAG系统，为用户提供智能化的私人衣橱管理和导购服务。',
     metrics: [
-      { label: '响应时间', value: '<500ms' },
-      { label: '准确率', value: '94%' },
+      { label: '竞赛奖项', value: '最佳Vibe Coding' },
+      { label: '检索精度', value: '高精度RAG' },
     ],
     icon: 'code' as const,
   },
@@ -51,7 +51,7 @@ export default function WorkSection() {
   const { mode } = useMode();
 
   return (
-    <section className="min-h-screen py-20 px-6">
+    <section className="min-h-screen py-20 px-6 bg-[#fbf7db52] bg-none">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -67,9 +67,7 @@ export default function WorkSection() {
           >
             Selected Works
           </h2>
-          <p className="text-muted-foreground text-lg">
-            精选项目展示设计与技术的融合实践
-          </p>
+
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8">

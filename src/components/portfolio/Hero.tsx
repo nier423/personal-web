@@ -5,7 +5,7 @@ export default function Hero() {
   const { mode } = useMode();
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-20">
+    <section className="min-h-screen flex items-center justify-center px-6 pt-20 bg-[#fbf7db52] bg-none">
       <div className="container mx-auto max-w-4xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
