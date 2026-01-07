@@ -38,7 +38,7 @@ export default function Hero() {
           className="max-w-2xl mx-auto"
         >
           <p className="text-base xl:text-lg text-muted-foreground leading-relaxed">
-            融合环境设计与 AI 全栈开发的跨学科能力，致力于创造兼具美学价值与技术创新的产品体验。
+            自学AI编程3个月，坚定的实战派，在vibe coding的浪潮里把想法变成现实的一名艺术生。
           </p>
         </motion.div>
       </div>
