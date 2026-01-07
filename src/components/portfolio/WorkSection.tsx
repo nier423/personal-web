@@ -6,14 +6,14 @@ const projects = [
   {
     id: '01',
     number: '01',
-    title: 'AI 驱动的空间设计平台',
-    role: 'Product Manager & Lead Designer',
-    tags: ['AI', 'UX Design', 'React', 'Python', 'Computer Vision'],
+    title: '魔搭全栈开发 Copilot',
+    role: '开源挑战赛三等奖 · 魔搭社区专家讲师',
+    tags: ['Qwen-Max', 'LangChain', 'Agent', 'RAG', 'NLP'],
     description:
-      '构建智能化室内设计工具，通过 AI 算法自动生成空间布局方案，结合用户偏好实现个性化设计推荐。融合环境设计专业知识与机器学习技术，提升设计效率与用户体验。',
+      '参与由开放原子开源基金会主办的魔搭社区智能答疑Agent开源挑战赛，荣获三等奖。本项目是一款基于 Qwen-Max + LangChain 的垂直领域智能问答 Agent，专为解决魔搭社区开发者的技术难题而设计。',
     metrics: [
-      { label: '用户增长', value: '300%' },
-      { label: '设计效率提升', value: '5x' },
+      { label: '竞赛奖项', value: '三等奖' },
+      { label: '社区角色', value: '专家讲师' },
     ],
     icon: 'sparkles' as const,
   },
