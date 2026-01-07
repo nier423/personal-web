@@ -1,31 +1,31 @@
 import { useMode } from '@/contexts/ModeContext';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, Twitter } from 'lucide-react';
+import { Mail, MessageCircle, Github, X } from 'lucide-react';
 
 const socialLinks = [
   {
     name: 'Email',
     icon: Mail,
-    href: 'mailto:jiani.feng@example.com',
-    label: 'jiani.feng@example.com',
+    href: 'mailto:1207818556@qq.com',
+    label: '1207818556@qq.com',
   },
   {
-    name: 'LinkedIn',
-    icon: Linkedin,
-    href: 'https://linkedin.com/in/jianifeng',
-    label: 'linkedin.com/in/jianifeng',
+    name: 'WeChat',
+    icon: MessageCircle,
+    href: '#',
+    label: 'nier1002432',
   },
   {
-    name: 'GitHub',
+    name: 'AtomGit',
     icon: Github,
-    href: 'https://github.com/jianifeng',
-    label: 'github.com/jianifeng',
+    href: 'https://atomgit.com/jiani',
+    label: '@jiani',
   },
   {
-    name: 'Twitter',
-    icon: Twitter,
-    href: 'https://twitter.com/jianifeng',
-    label: '@jianifeng',
+    name: 'X',
+    icon: X,
+    href: 'https://x.com/nier423',
+    label: 'nier423',
   },
 ];
 
@@ -33,7 +33,7 @@ export default function Footer() {
   const { mode } = useMode();
 
   return (
-    <footer className="border-t border-border py-12 px-6 bg-[#fbf7db52] bg-none">
+    <footer className="border-t border-border py-12 px-6">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

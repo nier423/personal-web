@@ -38,7 +38,7 @@ export default function WorkSection() {
   const { mode } = useMode();
 
   return (
-    <section className="min-h-screen py-20 px-6 bg-[#fbf7db52] bg-none">
+    <section className="min-h-screen py-20 px-6">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
