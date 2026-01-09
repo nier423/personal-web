@@ -16,6 +16,13 @@ const projects = [
       { label: '社区角色', value: '专家讲师' },
     ],
     icon: 'sparkles' as const,
+    links: [
+      {
+        type: 'demo' as const,
+        url: 'https://modelscope.cn/studios/nier37/ModelScope-QA-Agent/summary',
+        label: '查看项目',
+      },
+    ],
   },
   {
     id: '02',
