@@ -37,6 +37,7 @@ const projects = [
       { label: '检索精度', value: '高精度RAG' },
     ],
     icon: 'code' as const,
+    backgroundImage: '/images/meditating-bg.png',
   },
 
 ];

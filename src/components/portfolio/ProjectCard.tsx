@@ -17,6 +17,7 @@ interface Project {
   links?: { type: 'github' | 'demo' | 'article'; url: string; label: string }[];
   image?: string;
   award?: string;
+  backgroundImage?: string;
 }
 
 interface ProjectCardProps {
@@ -71,7 +72,15 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           }}
         />
 
-        <CardContent className="relative p-8 xl:p-10 border-solid border-[#e9e9f8] bg-inherit bg-cover bg-center bg-no-repeat bg-[url(https://miaoda-edit-image.cdn.bcebos.com/8ripenn1fdoh/IMG-8te252arbe9s.png)] border-[0px] rounded-[1px] mt-[0px] border-[#e9e9f8]">
+        <CardContent 
+          className="relative p-8 xl:p-10"
+          style={project.backgroundImage ? {
+            backgroundImage: `url(${project.backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          } : undefined}
+        >
           {/* 顶部：项目编号、图标、获奖标识 */}
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center gap-4">
