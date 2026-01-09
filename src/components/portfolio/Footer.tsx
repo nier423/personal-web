@@ -26,8 +26,8 @@ const socialLinks = [
   {
     name: 'X',
     icon: XLogo,
-    href: 'https://x.com/nier423',
-    label: 'nier423',
+    href: 'https://x.com/fengni180575',
+    label: 'fengni180575',
   },
 ];
 
