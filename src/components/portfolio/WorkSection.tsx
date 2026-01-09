@@ -52,19 +52,39 @@ export default function WorkSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-20 text-center"
         >
+          {/* 装饰性小标题 */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-border/50 mb-6"
+          >
+            <span className="text-sm font-medium text-muted-foreground">
+              {mode === 'code' ? '// Featured Projects' : '✦ 精选作品 ✦'}
+            </span>
+          </motion.div>
+
+          {/* 主标题 */}
           <h2
-            className={`text-4xl xl:text-5xl font-bold mb-4 ${
+            className={`text-5xl xl:text-6xl font-bold mb-6 ${
               mode === 'art' ? 'font-serif' : 'font-mono'
             }`}
           >
             AI Projects
           </h2>
 
+          {/* 装饰性下划线 */}
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: '100%' }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="h-1 max-w-24 mx-auto rounded-full bg-gradient-to-r from-transparent via-primary to-transparent"
+          />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 gap-12">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
