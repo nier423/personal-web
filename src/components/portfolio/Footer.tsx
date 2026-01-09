@@ -19,7 +19,7 @@ const socialLinks = [
   {
     name: 'AtomGit',
     icon: Github,
-    href: 'https://atomgit.com/jiani',
+    href: 'https://openatom.tech/ai-research_and_embodied/0bd1f6d90a2effe910d9a4188d90d1ea',
     label: '@jiani',
   },
   {
