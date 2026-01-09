@@ -2,6 +2,7 @@ import { useMode } from '@/contexts/ModeContext';
 import { motion } from 'framer-motion';
 import { Mail, MessageCircle, Github } from 'lucide-react';
 import XLogo from '@/components/ui/x-logo';
+import { useState } from 'react';
 
 const socialLinks = [
   {
@@ -32,6 +33,7 @@ const socialLinks = [
 
 export default function Footer() {
   const { mode } = useMode();
+  const [showQRCode, setShowQRCode] = useState(false);
 
   return (
     <footer className="border-t border-border py-12 px-6">
@@ -61,26 +63,60 @@ export default function Footer() {
           <div className="grid grid-cols-1 @md:grid-cols-2 gap-4">
             {socialLinks.map((link) => {
               const Icon = link.icon;
+              const isWeChat = link.name === 'WeChat';
+              
               return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-lg border border-border hover:bg-accent transition-colors group"
-                >
-                  <Icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium">{link.name}</div>
-                    <div
-                      className={`text-xs text-muted-foreground truncate ${
-                        mode === 'code' ? 'font-mono' : ''
-                      }`}
-                    >
-                      {link.label}
+                <div key={link.name} className="relative">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-border hover:bg-accent transition-colors group"
+                    onMouseEnter={() => isWeChat && setShowQRCode(true)}
+                    onMouseLeave={() => isWeChat && setShowQRCode(false)}
+                  >
+                    <Icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium">{link.name}</div>
+                      <div
+                        className={`text-xs text-muted-foreground truncate ${
+                          mode === 'code' ? 'font-mono' : ''
+                        }`}
+                      >
+                        {link.label}
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                  
+                  {/* 微信二维码弹出层 */}
+                  {isWeChat && showQRCode && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50"
+                    >
+                      <div className="bg-card border-2 border-border rounded-lg p-3 shadow-lg">
+                        <img
+                          src="/images/wechat-qrcode.png"
+                          alt="微信二维码"
+                          className="w-48 h-48 object-contain"
+                        />
+                        <p className="text-xs text-center text-muted-foreground mt-2">
+                          扫码添加微信
+                        </p>
+                      </div>
+                      {/* 小三角箭头 */}
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px">
+                        <div className="border-8 border-transparent border-t-border"></div>
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full">
+                          <div className="border-[7px] border-transparent border-t-card"></div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
               );
             })}
           </div>
