@@ -16,6 +16,7 @@ const projects = [
       { label: '社区角色', value: '专家讲师' },
     ],
     icon: 'sparkles' as const,
+    backgroundImage: '/images/running-bg.png',
     links: [
       {
         type: 'demo' as const,
