@@ -34,7 +34,7 @@ export default function Footer() {
   const { mode } = useMode();
 
   return (
-    <footer className="border-t border-border py-12 px-6 bg-[#fbf7db52] bg-none">
+    <footer className="border-t border-border py-12 px-6">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
