@@ -39,6 +39,14 @@ const projects = [
     ],
     icon: 'code' as const,
     backgroundImage: '/images/meditating-bg.png',
+    qrcodeImage: '/images/wardrobe-miniprogram.jpg',
+    links: [
+      {
+        type: 'qrcode' as const,
+        url: '#',
+        label: '查看项目',
+      },
+    ],
   },
 
 ];
@@ -57,16 +65,6 @@ export default function WorkSection() {
           className="mb-20 text-center"
         >
           {/* 装饰性小标题 */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-border/50 mb-6"
-          >
-            <span className="text-sm font-medium text-muted-foreground">
-              {mode === 'code' ? '// Featured Projects' : '✦ 精选作品 ✦'}
-            </span>
-          </motion.div>
 
           {/* 主标题 */}
           <h2
@@ -76,7 +74,6 @@ export default function WorkSection() {
           >
             AI Projects
           </h2>
-
           {/* 装饰性下划线 */}
           <motion.div
             initial={{ width: 0 }}

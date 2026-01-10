@@ -1,8 +1,10 @@
 import { useMode } from '@/contexts/ModeContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { motion } from 'framer-motion';
 import { Sparkles, Code2, Palette, Award, ExternalLink, Github } from 'lucide-react';
+import { useState } from 'react';
 
 interface Project {
   id: string;
@@ -14,10 +16,11 @@ interface Project {
   metrics: { label: string; value: string }[];
   icon: 'sparkles' | 'code' | 'palette';
   highlights?: string[];
-  links?: { type: 'github' | 'demo' | 'article'; url: string; label: string }[];
+  links?: { type: 'github' | 'demo' | 'article' | 'qrcode'; url: string; label: string }[];
   image?: string;
   award?: string;
   backgroundImage?: string;
+  qrcodeImage?: string;
 }
 
 interface ProjectCardProps {
@@ -34,15 +37,25 @@ const iconMap = {
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const { mode } = useMode();
   const Icon = iconMap[project.icon];
+  const [showQRCode, setShowQRCode] = useState(false);
+
+  const handleLinkClick = (link: { type: string; url: string; label: string }) => {
+    if (link.type === 'qrcode' && project.qrcodeImage) {
+      setShowQRCode(true);
+    } else {
+      window.open(link.url, '_blank');
+    }
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="group"
-    >
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.6, delay: index * 0.15 }}
+        className="group"
+      >
       <Card
         className={`relative overflow-hidden transition-all duration-500 ${
           mode === 'code'
@@ -261,14 +274,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {project.links && project.links.length > 0 && (
               <div className="flex flex-wrap gap-3 pt-4 border-t border-border/50">
                 {project.links.map((link) => (
-                  <motion.a
+                  <motion.button
                     key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => handleLinkClick(link)}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${
                       mode === 'code'
                         ? 'bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-mono'
                         : 'bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground shadow-md hover:shadow-lg'
@@ -277,7 +288,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     {link.type === 'github' && <Github className="w-4 h-4" />}
                     {link.type !== 'github' && <ExternalLink className="w-4 h-4" />}
                     {link.label}
-                  </motion.a>
+                  </motion.button>
                 ))}
               </div>
             )}
@@ -285,5 +296,27 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </CardContent>
       </Card>
     </motion.div>
+
+    {/* 二维码弹窗 */}
+    {project.qrcodeImage && (
+      <Dialog open={showQRCode} onOpenChange={setShowQRCode}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-center">扫码体验小程序</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center justify-center p-6">
+            <img
+              src={project.qrcodeImage}
+              alt="小程序码"
+              className="w-64 h-64 object-contain"
+            />
+            <p className="text-sm text-muted-foreground mt-4 text-center">
+              使用微信扫描二维码体验小程序
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
+    )}
+  </>
   );
 }
