@@ -1,3 +1,7 @@
+# 欢迎使用你的秒哒应用代码包
+秒哒应用链接
+    URL:https://www.miaoda.cn/projects/app-8ripenn1fdoh
+
 # Jiani Feng 个人作品集网站
 
 一个高性能、交互丰富的个人作品集网站，展示环境设计与 AI 全栈开发领域的跨学科能力。
