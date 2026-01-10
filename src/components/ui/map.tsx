@@ -139,7 +139,7 @@ const initMap = useCallback(() => {
     }
 
     // Clear overlays
-    map.clearOverlays();
+    (map as any)?.clearOverlays();
 
     // Set map center coordinates and map level
     const center = new (window as any).BMapGL.Point(
@@ -147,11 +147,11 @@ const initMap = useCallback(() => {
     _options?.lat
     );
 
-    map.centerAndZoom(center, _options?.zoom);
+    (map as any)?.centerAndZoom(center, _options?.zoom);
 
     // Add marker
     const marker = new (window as any).BMapGL.Marker(center);
-    map.addOverlay(marker);
+    (map as any)?.addOverlay(marker);
 }, [_options]);
 
 useEffect(() => {

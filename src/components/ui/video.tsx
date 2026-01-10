@@ -11,6 +11,7 @@
  */
 
 import {
+    Player,
     BigPlayButton,
     ControlBar,
     PlayToggle,
@@ -102,9 +103,13 @@ display: block;
         <TimeDivider key="time-divider" />
         <DurationDisplay key="duration-display" />
         <ProgressControl key="progress-control" />
-        <FullscreenToggle key="fullscreen-toggle" />
+        <FullscreenToggle key="fullscreen-toggle" actions={{
+          toggleFullscreen: () => {
+            // Optional: add custom fullscreen toggle logic here
+          }
+        }} />
         </ControlBar>
-        <BigPlayButton position="center" />
+        <BigPlayButton position="center" className="big-play-button-hide" />
     </Player>
     </div>
 );
