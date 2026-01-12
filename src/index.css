@@ -1,6 +1,16 @@
 /* stylelint-disable */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
-
+/* --- 在这里补上缺失的字体引入代码 --- */
+@font-face {
+  font-family: 'Aloha';
+  /* 假设你的字体在 src/assets/fonts/ 下，且 index.css 在 src/ 下 */
+  src: url('./assets/fonts/Aloha.ttf') format('truetype'),
+       url('./assets/fonts/Aloha.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* 这是一个优化，防止字体加载时文字隐形 */
+}
+/* ------------------------------------- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -142,13 +152,13 @@ All colors MUST be HSL.
   }
   
   .art-mode h1,
-  .art-mode h2,
-  .art-mode h3,
-  .art-mode h4,
-  .art-mode h5,
-  .art-mode h6 {
-    font-family: 'Playfair Display', serif;
-  }
+.art-mode h2,
+.art-mode h3,
+.art-mode h4,
+.art-mode h5,
+.art-mode h6 {
+  font-family: 'Aloha', 'Playfair Display', serif;
+}
   
   /* Code Mode 字体和背景 */
   .code-mode {

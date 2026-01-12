@@ -2,8 +2,8 @@ import { useMode } from '@/contexts/ModeContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { motion } from 'framer-motion';
-import { Sparkles, Code2, Palette, Award, ExternalLink, Github } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Code2, Palette, Award, ExternalLink, Github, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 
 interface Project {
@@ -21,6 +21,7 @@ interface Project {
   award?: string;
   backgroundImage?: string;
   qrcodeImage?: string;
+  notes?: string;
 }
 
 interface ProjectCardProps {
@@ -38,6 +39,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const { mode } = useMode();
   const Icon = iconMap[project.icon];
   const [showQRCode, setShowQRCode] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
 
   const handleLinkClick = (link: { type: string; url: string; label: string }) => {
     if (link.type === 'qrcode' && project.qrcodeImage) {
@@ -270,28 +272,68 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </div>
             )}
 
-            {/* 项目链接（如果有） - 优化按钮设计 */}
-            {project.links && project.links.length > 0 && (
-              <div className="flex flex-wrap gap-3 pt-4 border-t border-border/50">
-                {project.links.map((link) => (
-                  <motion.button
-                    key={link.url}
-                    onClick={() => handleLinkClick(link)}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${
-                      mode === 'code'
-                        ? 'bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-mono'
-                        : 'bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground shadow-md hover:shadow-lg'
-                    }`}
-                  >
-                    {link.type === 'github' && <Github className="w-4 h-4" />}
-                    {link.type !== 'github' && <ExternalLink className="w-4 h-4" />}
-                    {link.label}
-                  </motion.button>
-                ))}
-              </div>
-            )}
+            {/* 底部操作栏：项目链接 + 工程手记 */}
+            <div className="flex flex-wrap gap-3 pt-4 border-t border-border/50">
+              {project.links && project.links.map((link) => (
+                <motion.button
+                  key={link.url}
+                  onClick={() => handleLinkClick(link)}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                    mode === 'code'
+                      ? 'bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-mono'
+                      : 'bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground shadow-md hover:shadow-lg'
+                  }`}
+                >
+                  {link.type === 'github' && <Github className="w-4 h-4" />}
+                  {link.type !== 'github' && <ExternalLink className="w-4 h-4" />}
+                  {link.label}
+                </motion.button>
+              ))}
+
+              <motion.button
+                onClick={() => setShowNotes(!showNotes)}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                  mode === 'code'
+                    ? 'bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-mono'
+                    : 'bg-secondary hover:bg-secondary/80 text-secondary-foreground shadow-md hover:shadow-lg'
+                }`}
+              >
+                <BookOpen className="w-4 h-4" />
+                Engineering Notes
+                {showNotes ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </motion.button>
+            </div>
+
+            {/* 工程手记内容区域 */}
+            <AnimatePresence>
+              {showNotes && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className={`mt-4 p-6 rounded-xl border ${
+                    mode === 'code' 
+                      ? 'bg-black/40 border-primary/20 font-mono text-sm' 
+                      : 'bg-muted/50 border-border/50'
+                  }`}>
+                    <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
+                      <Code2 className="w-4 h-4" />
+                      工程手记
+                    </h4>
+                    <div className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground whitespace-pre-wrap">
+                      {project.notes || "暂无工程手记内容..."}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </CardContent>
       </Card>

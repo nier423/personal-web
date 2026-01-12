@@ -17,7 +17,7 @@ export default function Hero() {
               mode === 'art' ? 'font-serif' : 'font-mono'
             }`}
           >
-            An AI-native person.
+            Architecting the Soul of AI Agents.
           </h2>
         </motion.div>
 
@@ -27,7 +27,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <p className="text-xl xl:text-2xl text-muted-foreground mb-8">
-            Hybrid AI Product Manager & Designer
+            Product Engineer Bridging Human Intent & Silicon Execution.
           </p>
         </motion.div>
 
@@ -37,7 +37,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="max-w-2xl mx-auto"
         >
-          <p className="text-base xl:text-lg text-muted-foreground leading-relaxed">自学AI编程3个月，坚定的实战派，在vibe coding的浪潮里把想法变成现实的一名艺术生。</p>
+          <p className="text-base xl:text-lg text-muted-foreground leading-relaxed">Stay sensitive stay curious stay alive</p>
         </motion.div>
       </div>
     </section>

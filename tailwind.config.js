@@ -86,6 +86,10 @@ export default {
                     '5': 'hsl(var(--chart-5))'
                 }
             },
+            fontFamily: {
+                aloha: ['Aloha', 'sans-serif'],
+                serif: ['Aloha', 'Playfair Display', 'serif'],
+            },
             borderRadius: {
                 lg: 'var(--radius)',
                 md: 'calc(var(--radius) - 2px)',
