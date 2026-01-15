@@ -1,8 +1,8 @@
 import { useMode } from '@/contexts/ModeContext';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Code2, Palette, Award, ExternalLink, Github, BookOpen, ChevronDown, ChevronUp, ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Sparkles, Award, Github, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
 
 // --- 保持你的接口定义不变 ---
@@ -29,15 +29,8 @@ interface ProjectCardProps {
   index: number;
 }
 
-const iconMap = {
-  sparkles: Sparkles,
-  code: Code2,
-  palette: Palette,
-};
-
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const { mode } = useMode();
-  const Icon = iconMap[project.icon];
   const [showQRCode, setShowQRCode] = useState(false);
   const isArt = mode === 'art';
 
