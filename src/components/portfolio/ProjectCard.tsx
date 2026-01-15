@@ -1,11 +1,11 @@
 import { useMode } from '@/contexts/ModeContext';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { motion } from 'framer-motion';
-import { Sparkles, Code2, Palette, Award, ExternalLink, Github } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Code2, Palette, Award, ExternalLink, Github, BookOpen, ChevronDown, ChevronUp, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
 
+// --- 保持你的接口定义不变 ---
 interface Project {
   id: string;
   number: string;
@@ -13,7 +13,7 @@ interface Project {
   role: string;
   tags: string[];
   description: string;
-  metrics: { label: string; value: string }[];
+  // metrics: { label: string; value: string }[]; // Removed as requested
   icon: 'sparkles' | 'code' | 'palette';
   highlights?: string[];
   links?: { type: 'github' | 'demo' | 'article' | 'qrcode'; url: string; label: string }[];
@@ -21,6 +21,7 @@ interface Project {
   award?: string;
   backgroundImage?: string;
   qrcodeImage?: string;
+  notes?: string;
 }
 
 interface ProjectCardProps {
@@ -38,6 +39,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const { mode } = useMode();
   const Icon = iconMap[project.icon];
   const [showQRCode, setShowQRCode] = useState(false);
+  const isArt = mode === 'art';
 
   const handleLinkClick = (link: { type: string; url: string; label: string }) => {
     if (link.type === 'qrcode' && project.qrcodeImage) {
@@ -54,269 +56,197 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, delay: index * 0.15 }}
-        className="group"
+        className="group w-full"
       >
-      <Card
-        className={`relative overflow-hidden transition-all duration-500 ${
-          mode === 'code'
-            ? 'bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 hover:bg-card/80'
-            : 'bg-card/80 backdrop-blur-sm hover:shadow-2xl hover:scale-[1.02]'
-        }`}
-      >
-        {/* 装饰性渐变背景 */}
-        <div
-          className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${
-            mode === 'code'
-              ? 'bg-gradient-to-br from-primary/5 via-transparent to-transparent'
-              : 'bg-gradient-to-br from-primary/3 via-transparent to-accent/5'
-          }`}
-        />
+        {/* 核心容器 
+          不再使用 Shadcn 的 <Card> 组件，而是手写容器样式以获得更强的布局控制力 
+        */}
+        <div className={`
+          relative w-full overflow-hidden rounded-[2.5rem] border transition-all duration-700
+          ${isArt 
+            ? 'bg-[#FBF7DB] border-stone-200/80 shadow-md hover:shadow-2xl hover:-translate-y-1' // Art Mode
+            : 'bg-black/40 backdrop-blur-2xl border-white/10 hover:border-primary/40 hover:shadow-[0_0_50px_-10px_rgba(var(--primary),0.25)] hover:-translate-y-1' // Code Mode
+          }
+        `}>
+        
+          {/* 布局核心：Flexbox 
+             手机端(默认)是竖排 (flex-col)，电脑端(md)是横排 (flex-row)
+          */}
+          <div className="flex flex-col md:flex-row items-stretch min-h-[500px]">
+            
+            {/* ================= 左侧：内容控制区 (55%) ================= */}
+            <div className="relative z-10 flex w-full flex-col p-8 md:w-[55%] md:p-12 lg:p-14 justify-between">
+              
+              <div>
+                {/* 1. 顶部 Header: 序号 + 角色 + 奖项 */}
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-4">
+                    <span className={`text-7xl font-black opacity-15 leading-none ${isArt ? 'font-aloha text-stone-900' : 'font-mono text-white'}`}>
+                      {project.number}
+                    </span>
+                    {project.award && (
+                      <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className={`flex items-center gap-2 px-4 py-1.5 rounded-full border backdrop-blur-sm ${
+                          isArt 
+                            ? 'bg-amber-100/50 border-amber-200 text-amber-900' 
+                            : 'bg-primary/10 border-primary/30 text-primary'
+                        }`}
+                      >
+                        <Award className="w-4 h-4" />
+                        <span className="text-xs font-bold uppercase tracking-wider">
+                          {project.award}
+                        </span>
+                      </motion.div>
+                    )}
+                  </div>
+                </div>
 
-        {/* 装饰性边框光效 */}
-        <div
-          className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${
-            mode === 'code' ? 'border border-primary/20' : ''
-          }`}
-          style={{
-            background:
-              mode === 'code'
-                ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)'
-                : 'none',
-          }}
-        />
+                {/* 2. 标题区域 */}
+                <h3 className={`text-4xl lg:text-5xl font-bold mb-6 leading-[1.1] tracking-tight ${
+                    isArt ? 'font-serif text-stone-900' : 'font-mono text-white'
+                  }`}>
+                  {project.title}
+                </h3>
 
-        <CardContent 
-          className="relative p-8 xl:p-10"
-          style={project.backgroundImage ? {
-            backgroundImage: `url(${project.backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          } : undefined}
-        >
-          {/* 顶部：项目编号、图标、获奖标识 */}
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex items-center gap-4">
-              {/* 项目编号 - 大号装饰性数字 */}
-              <span
-                className={`text-6xl font-bold opacity-10 ${
-                  mode === 'code' ? 'font-mono' : 'font-serif'
-                }`}
-              >
-                {project.number}
-              </span>
-              {project.award && (
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 backdrop-blur-sm"
-                >
-                  <Award className="w-4 h-4 text-amber-600" />
-                  <span className="text-xs font-semibold text-amber-700">
-                    {project.award}
-                  </span>
-                </motion.div>
+                {/* 3. Tags & Role */}
+                <div className="flex flex-wrap items-center gap-3 mb-8">
+                   <Badge variant="secondary" className={`px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide ${
+                     isArt 
+                       ? 'bg-stone-900 text-[#FBF7DB] hover:bg-stone-800' 
+                       : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                   }`}>
+                      {project.role}
+                   </Badge>
+                   <div className={`h-1 w-1 rounded-full mx-1 ${isArt ? 'bg-stone-400' : 'bg-zinc-600'}`} />
+                   {project.tags.map(tag => (
+                     <span key={tag} className={`text-sm font-medium px-2 py-1 rounded-md ${
+                       isArt 
+                         ? 'text-stone-500 bg-stone-100/50' 
+                         : 'text-zinc-400 bg-white/5 border border-white/5'
+                     }`}>
+                       {tag}
+                     </span>
+                   ))}
+                </div>
+
+                {/* 4. 描述 Description */}
+                <p className={`mb-10 text-lg leading-relaxed max-w-xl ${isArt ? 'text-stone-600' : 'text-zinc-400'}`}>
+                  {project.description}
+                </p>
+
+                {/* 5. 亮点 Highlights (如有) */}
+                {project.highlights && project.highlights.length > 0 && (
+                  <div className={`mb-8 p-6 rounded-2xl border ${isArt ? 'bg-white/60 border-stone-100' : 'bg-white/5 border-white/10'}`}>
+                     <h4 className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4 flex items-center gap-2">
+                       <Sparkles className="w-3 h-3" /> Highlights
+                     </h4>
+                     <ul className="space-y-3">
+                       {project.highlights.map((h, i) => (
+                         <li key={i} className="flex gap-3 text-sm opacity-90">
+                           <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${isArt ? 'bg-stone-400' : 'bg-primary'}`} />
+                           <span className="leading-relaxed">{h}</span>
+                         </li>
+                       ))}
+                     </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* 7. 底部按钮区 (Links & Notes) */}
+              <div className="flex flex-wrap gap-4 pt-6 border-t border-dashed border-opacity-20 border-current">
+                {project.links?.map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => handleLinkClick(link)}
+                    className={`
+                      group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm transition-all duration-300
+                      ${isArt 
+                        ? 'bg-stone-900 text-[#FBF7DB] hover:scale-105 hover:shadow-lg' 
+                        : 'bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/40 hover:shadow-[0_0_20px_-5px_rgba(var(--primary),0.3)]'}
+                    `}
+                  >
+                    {link.type === 'github' ? <Github className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />}
+                    {link.label}
+                  </button>
+                ))}
+              </div>
+
+            </div>
+
+            {/* ================= 右侧：视觉艺术区 (45%) ================= */}
+            <div className="relative min-h-[300px] w-full md:min-h-full md:w-[45%] overflow-hidden">
+              {/* 只有当提供了图片时才渲染 */}
+              {project.backgroundImage && (
+                <>
+                  {/* 背景光晕装饰 (可选) */}
+                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] opacity-40
+                     ${isArt ? 'bg-orange-200' : 'bg-primary/40'}
+                  `} />
+
+                  {/* 核心改动：使用 img 标签代替 background-image */}
+                  <img
+                    src={project.backgroundImage}
+                    alt={project.title}
+                    className="
+                      absolute 
+                      bottom-0 
+                      right-0 
+                      h-auto 
+                      w-[85%]             /* 手机端尺寸 */
+                      max-w-[500px] 
+                      object-contain 
+                      z-10
+                      
+                      /* 桌面端动效：破格溢出 */
+                      md:w-[100%] 
+                      md:max-w-none 
+                      md:right-0
+                      md:bottom-0
+                      
+                      transition-transform 
+                      duration-700 
+                      ease-out
+                      group-hover:scale-105 
+                      group-hover:-rotate-1
+                    "
+                  />
+                  
+                  {/* 渐变遮罩，让文字更易读（如果是手机端）或增加层次感 */}
+                  <div className={`absolute inset-0 pointer-events-none z-20 md:bg-gradient-to-l ${
+                    isArt 
+                      ? 'from-transparent via-transparent to-[#FBF7DB]/80' 
+                      : 'from-transparent via-transparent to-black/60'
+                  }`} />
+                </>
               )}
             </div>
-            
-            {/* 图标 - 增强动画效果 */}
-            <motion.div
-              whileHover={{ rotate: 360, scale: 1.1 }}
-              transition={{ duration: 0.6 }}
-              className={`p-3 rounded-xl ${
-                mode === 'code'
-                  ? 'bg-primary/10 border border-primary/20'
-                  : 'bg-accent/50'
-              }`}
-            >
-              <Icon
-                className={`w-6 h-6 ${
-                  mode === 'code' ? 'text-primary' : 'text-foreground'
-                }`}
-              />
-            </motion.div>
+
           </div>
+        </div>
+      </motion.div>
 
-          {/* 项目标题 - 增强排版 */}
-          <h3
-            className={`text-3xl xl:text-4xl font-bold mb-4 leading-tight ${
-              mode === 'art' ? 'font-serif' : 'font-mono'
-            } ${
-              mode === 'code'
-                ? 'text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/70'
-                : ''
-            }`}
-          >
-            {project.title}
-          </h3>
-
-          {/* 角色标签 - 优化样式 */}
-          <div className="mb-6">
-            <Badge
-              variant="secondary"
-              className={`px-4 py-1.5 text-sm ${
-                mode === 'code'
-                  ? 'bg-muted/50 border border-border/50 font-mono'
-                  : 'bg-secondary/80'
-              }`}
-            >
-              {project.role}
-            </Badge>
-          </div>
-
-          {/* 项目描述 - 优化行高和间距 */}
-          <p className="text-muted-foreground mb-8 leading-relaxed text-base xl:text-lg">
-            {project.description}
-          </p>
-
-          {/* 技术栈标签 - 优化布局 */}
-          <div className="flex flex-wrap gap-2.5 mb-8">
-            {project.tags.map((tag, idx) => (
-              <motion.div
-                key={tag}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.05 }}
-              >
-                <Badge
-                  variant="outline"
-                  className={`px-3 py-1 transition-all duration-300 ${
-                    mode === 'code'
-                      ? 'font-mono text-xs border-primary/30 hover:border-primary hover:bg-primary/10'
-                      : 'hover:bg-accent hover:border-accent-foreground/20'
-                  }`}
-                >
-                  {tag}
-                </Badge>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* 项目展示图片（如果有） */}
-          {project.image && (
-            <div className="mb-8 rounded-xl overflow-hidden border border-border/50 shadow-lg">
+      {/* 保持原有的二维码弹窗逻辑 */}
+      {project.qrcodeImage && (
+        <Dialog open={showQRCode} onOpenChange={setShowQRCode}>
+          <DialogContent className="sm:max-w-md bg-white text-black">
+            <DialogHeader>
+              <DialogTitle className="text-center">扫码体验小程序</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col items-center justify-center p-6">
               <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                src={project.qrcodeImage}
+                alt="小程序码"
+                className="w-64 h-64 object-contain"
               />
+              <p className="text-sm text-stone-500 mt-4 text-center">
+                使用微信扫描二维码体验
+              </p>
             </div>
-          )}
-
-          {/* 项目亮点（如果有） */}
-          {project.highlights && project.highlights.length > 0 && (
-            <div className="mb-8 p-6 rounded-xl bg-muted/30 border border-border/50">
-              <h4 className="text-sm font-semibold mb-4 text-foreground flex items-center gap-2">
-                <span className="text-lg">✨</span>
-                项目亮点
-              </h4>
-              <ul className="space-y-3">
-                {project.highlights.map((highlight, idx) => (
-                  <motion.li
-                    key={idx}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="text-sm text-muted-foreground flex items-start gap-3"
-                  >
-                    <span className="text-primary mt-1 font-bold">•</span>
-                    <span className="flex-1">{highlight}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* 底部：量化数据 + 项目链接 */}
-          <div className="flex flex-col gap-6">
-            {/* 量化数据 - 优化设计 */}
-            {mode === 'code' ? (
-              <div className="bg-muted/50 backdrop-blur-sm rounded-xl p-6 font-mono text-sm border border-border/50 shadow-inner">
-                <div className="text-muted-foreground mb-2">{'{'}</div>
-                {project.metrics.map((metric, idx) => (
-                  <motion.div
-                    key={metric.label}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="ml-6"
-                  >
-                    <span className="text-primary font-semibold">"{metric.label}"</span>:{' '}
-                    <span className="text-foreground">"{metric.value}"</span>
-                    {idx < project.metrics.length - 1 ? ',' : ''}
-                  </motion.div>
-                ))}
-                <div className="text-muted-foreground">{'}'}</div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-6">
-                {project.metrics.map((metric, idx) => (
-                  <motion.div
-                    key={metric.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="p-4 rounded-xl bg-gradient-to-br from-accent/30 to-accent/10 border border-border/50"
-                  >
-                    <div className="text-3xl font-bold text-foreground mb-1">
-                      {metric.value}
-                    </div>
-                    <div className="text-sm text-muted-foreground font-medium">
-                      {metric.label}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-
-            {/* 项目链接（如果有） - 优化按钮设计 */}
-            {project.links && project.links.length > 0 && (
-              <div className="flex flex-wrap gap-3 pt-4 border-t border-border/50">
-                {project.links.map((link) => (
-                  <motion.button
-                    key={link.url}
-                    onClick={() => handleLinkClick(link)}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${
-                      mode === 'code'
-                        ? 'bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-mono'
-                        : 'bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground shadow-md hover:shadow-lg'
-                    }`}
-                  >
-                    {link.type === 'github' && <Github className="w-4 h-4" />}
-                    {link.type !== 'github' && <ExternalLink className="w-4 h-4" />}
-                    {link.label}
-                  </motion.button>
-                ))}
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
-
-    {/* 二维码弹窗 */}
-    {project.qrcodeImage && (
-      <Dialog open={showQRCode} onOpenChange={setShowQRCode}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-center">扫码体验小程序</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col items-center justify-center p-6">
-            <img
-              src={project.qrcodeImage}
-              alt="小程序码"
-              className="w-64 h-64 object-contain"
-            />
-            <p className="text-sm text-muted-foreground mt-4 text-center">
-              使用微信扫描二维码体验小程序
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
-    )}
-  </>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 }

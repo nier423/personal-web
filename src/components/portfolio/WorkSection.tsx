@@ -11,12 +11,8 @@ const projects = [
     tags: ['Qwen-Max', 'LangChain', 'Agent', 'RAG', 'NLP'],
     description:
       '参与由开放原子开源基金会主办的魔搭社区智能答疑Agent开源挑战赛，荣获三等奖。本项目是一款基于 Qwen-Max + LangChain 的垂直领域智能问答 Agent，专为解决魔搭社区开发者的技术难题而设计。',
-    metrics: [
-      { label: '竞赛奖项', value: '三等奖' },
-      { label: '社区角色', value: '专家讲师' },
-    ],
     icon: 'sparkles' as const,
-    backgroundImage: '/images/running-bg.png',
+    backgroundImage: '/images/project-bg-1.png',
     links: [
       {
         type: 'demo' as const,
@@ -33,12 +29,8 @@ const projects = [
     tags: ['多模态大模型', 'Milvus', 'RAG', '混合检索', '微信小程序'],
     description:
       '参加创业磨坊VibeBuild Bootcamp获得最佳Vibe coding奖。采用多模态大模型与混合检索策略，基于Milvus向量数据库构建高精度RAG系统，为用户提供智能化的私人衣橱管理和导购服务。',
-    metrics: [
-      { label: '竞赛奖项', value: '最佳Vibe Coding' },
-      { label: '检索精度', value: '高精度RAG' },
-    ],
     icon: 'code' as const,
-    backgroundImage: '/images/meditating-bg.png',
+    backgroundImage: '/images/project-bg-2.png',
     qrcodeImage: '/images/wardrobe-miniprogram.jpg',
     links: [
       {
