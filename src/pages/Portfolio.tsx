@@ -2,6 +2,7 @@ import { useMode } from '@/contexts/ModeContext';
 import { useEffect } from 'react';
 import Header from '@/components/portfolio/Header';
 import Hero from '@/components/portfolio/Hero';
+import AboutSection from '@/components/portfolio/AboutSection';
 import WorkSection from '@/components/portfolio/WorkSection';
 import Footer from '@/components/portfolio/Footer';
 import PageMeta from '@/components/common/PageMeta';
@@ -32,6 +33,7 @@ export default function Portfolio() {
         <Header />
         <main>
           <Hero />
+          <AboutSection />
           <WorkSection />
         </main>
         <Footer />
