@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Header from '@/components/portfolio/Header';
 import Hero from '@/components/portfolio/Hero';
 import AboutSection from '@/components/portfolio/AboutSection';
+import ProductSection from '@/components/portfolio/ProductSection';
 import WorkSection from '@/components/portfolio/WorkSection';
 import Footer from '@/components/portfolio/Footer';
 import PageMeta from '@/components/common/PageMeta';
@@ -35,6 +36,7 @@ export default function Portfolio() {
           <Hero />
           <AboutSection />
           <WorkSection />
+          <ProductSection />
         </main>
         <Footer />
       </div>
