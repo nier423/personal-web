@@ -64,7 +64,7 @@ export default function WorkSection() {
               mode === 'art' ? 'font-serif' : 'font-mono'
             }`}
           >
-            AI Projects
+            AI Award
           </h2>
           {/* 装饰性下划线 */}
           <motion.div
